@@ -1,12 +1,29 @@
+import company.exceptions.InvalidAgeException;
 import company.implementations.EmailMessenger;
+import company.beans.Person;
 import company.utils.MathUtils;
 
 public class Main {
     public static void main(String[] args) {
-        int result = MathUtils.add(5, 3);
-        System.out.println("Result of addition: " + result);
+        Person[] people = new Person[5];
+        final int b = 10;
+
+        try {
+            people[0] = new Person("John Doe", 30);
+            people[1] = new Person("Alice Smith", 25);
+            people[2] = new Person("Bob Johnson", 40);
+            people[3] = new Person("Emily Brown", 35);
+            people[4] = new Person("Michael Davis", 28);
+        } catch (InvalidAgeException e) {
+            System.out.println("Invalid age exception: " + e.getMessage());
+        }
 
         EmailMessenger emailMessenger = new EmailMessenger();
-        emailMessenger.sendMessage("The result of addition is: " + result);
+        for (Person person : people) {
+            if (person != null) {
+                int value = MathUtils.add(person.getAge(), b);
+                emailMessenger.sendMessage("The value for " + person.getName() + " is: " + value);
+            }
+        }
     }
 }
